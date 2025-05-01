@@ -7,7 +7,7 @@ const DocumentSchema = new mongoose.Schema({
     ref: 'Pet',
     required: true
   },
-  title: {
+    title: {
     type: String,
     required: true
   },
