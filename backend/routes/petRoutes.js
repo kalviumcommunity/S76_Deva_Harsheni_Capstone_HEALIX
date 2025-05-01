@@ -29,6 +29,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+
 //DID THE POST NOW ITSELF TO CHECK WHETHER THE GET WORKS OR NOT !
 
 // POST - Add a new pet
@@ -53,7 +54,7 @@ router.post('/post', async (req, res) => {
     res.status(201).json(savedPet);
   } catch (err) {
     console.error('Error creating pet:', err);
-    res.status(500).json({ message: 'Server error' });
+    res.stats(500).json({ message: 'Server error' });
   }
 });
 

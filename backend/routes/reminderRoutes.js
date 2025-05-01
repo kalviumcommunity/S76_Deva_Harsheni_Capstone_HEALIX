@@ -41,6 +41,8 @@ router.get('/type/:type', async (req, res) => {
   }
 });
 
+
+
 //DID THE POST NOW ITSELF TO CHECK WHETHER THE GET WORKS OR NOT !
 
 
