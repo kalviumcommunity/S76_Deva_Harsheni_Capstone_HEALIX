@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "cap-get-post-1",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
