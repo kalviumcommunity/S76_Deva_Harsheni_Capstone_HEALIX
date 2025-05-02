@@ -29,9 +29,6 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-
-//DID THE POST NOW ITSELF TO CHECK WHETHER THE GET WORKS OR NOT !
-
 // POST - Add a new pet
 router.post('/post', async (req, res) => {
   try {
@@ -54,6 +51,39 @@ router.post('/post', async (req, res) => {
     res.status(201).json(savedPet);
   } catch (err) {
     console.error('Error creating pet:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// PUT - Update a pet
+router.put('/:id', async (req, res) => {
+  try {
+    const { name, breed, age, userId, medicalHistory } = req.body;
+    
+    // Basic validation
+    if (!name || !breed || !age || !userId) {
+      return res.status(400).json({ message: 'Please provide name, breed, age, and userId' });
+    }
+    
+    const updatedPet = await Pet.findByIdAndUpdate(
+      req.params.id,
+      {
+        name,
+        breed,
+        age,
+        userId,
+        medicalHistory
+      },
+      { new: true } // Return the updated document
+    );
+    
+    if (!updatedPet) {
+      return res.status(404).json({ message: 'Pet not found' });
+    }
+    
+    res.json(updatedPet);
+  } catch (err) {
+    console.error('Error updating pet:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });

@@ -41,10 +41,6 @@ router.get('/type/:type', async (req, res) => {
   }
 });
 
-//DID THE POST NOW ITSELF TO CHECK WHETHER THE GET WORKS OR NOT !
-
-
-
 // POST - Upload a new document
 router.post('/', async (req, res) => {
   try {
@@ -74,6 +70,46 @@ router.post('/', async (req, res) => {
     res.status(201).json(savedDocument);
   } catch (err) {
     console.error('Error creating document:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// PUT - Update a document
+router.put('/:id', async (req, res) => {
+  try {
+    const { petId, title, fileUrl, documentType } = req.body;
+    
+    // Validate required fields
+    if (!petId || !title || !fileUrl) {
+      return res.status(400).json({ message: 'petId, title, and fileUrl are required fields' });
+    }
+    
+    // Validate document type if provided
+    if (documentType) {
+      const validTypes = ['prescription', 'vet_report', 'other'];
+      if (!validTypes.includes(documentType)) {
+        return res.status(400).json({ message: 'Invalid document type' });
+      }
+    }
+    
+    const updatedDocument = await Document.findByIdAndUpdate(
+      req.params.id,
+      {
+        petId,
+        title,
+        fileUrl,
+        documentType
+      },
+      { new: true } // Return the updated document
+    );
+    
+    if (!updatedDocument) {
+      return res.status(404).json({ message: 'Document not found' });
+    }
+    
+    res.json(updatedDocument);
+  } catch (err) {
+    console.error('Error updating document:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });
