@@ -54,7 +54,7 @@ router.post('/post', async (req, res) => {
     res.status(201).json(savedPet);
   } catch (err) {
     console.error('Error creating pet:', err);
-    res.stats(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
