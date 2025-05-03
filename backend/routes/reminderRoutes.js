@@ -41,11 +41,6 @@ router.get('/type/:type', async (req, res) => {
   }
 });
 
-
-
-//DID THE POST NOW ITSELF TO CHECK WHETHER THE GET WORKS OR NOT !
-
-
 // POST - Create a new reminder
 router.post('/', async (req, res) => {
   try {
@@ -75,6 +70,46 @@ router.post('/', async (req, res) => {
     res.status(201).json(savedReminder);
   } catch (err) {
     console.error('Error creating reminder:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// PUT - Update a reminder
+router.put('/:id', async (req, res) => {
+  try {
+    const { petId, type, title, date, time, notes } = req.body;
+    
+    // Validate required fields
+    if (!petId || !type || !title || !date) {
+      return res.status(400).json({ message: 'petId, type, title, and date are required fields' });
+    }
+    
+    // Validate type is in allowed values
+    const validTypes = ['vaccination', 'vet_visit', 'medication', 'walk', 'feeding'];
+    if (!validTypes.includes(type)) {
+      return res.status(400).json({ message: 'Invalid reminder type' });
+    }
+    
+    const updatedReminder = await Reminder.findByIdAndUpdate(
+      req.params.id,
+      {
+        petId,
+        type,
+        title,
+        date,
+        time,
+        notes
+      },
+      { new: true } // Return the updated document
+    );
+    
+    if (!updatedReminder) {
+      return res.status(404).json({ message: 'Reminder not found' });
+    }
+    
+    res.json(updatedReminder);
+  } catch (err) {
+    console.error('Error updating reminder:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });
