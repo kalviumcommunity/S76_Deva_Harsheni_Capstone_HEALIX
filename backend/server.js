@@ -7,18 +7,17 @@ const PORT = process.env.PORT || 5000;
 require('dotenv').config();
 const connectDatabase = require('./Database')
 
-
-
-// Middleware
 app.use(cors());
 app.use(express.json());
 
 connectDatabase();
 
+
 // Routes
 app.use('/api/pets', require('./routes/petRoutes'));
 app.use('/api/reminders', require('./routes/reminderRoutes'));
 app.use('/api/documents', require('./routes/documentRoutes'));
+
 
 // Base route
 app.get('/', (req, res) => {
