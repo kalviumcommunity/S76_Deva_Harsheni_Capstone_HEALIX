@@ -88,4 +88,20 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+// DELETE - Remove a pet
+router.delete('/:id', async (req, res) => {
+  try {
+    const deletedPet = await Pet.findByIdAndDelete(req.params.id);
+    
+    if (!deletedPet) {
+      return res.status(404).json({ message: 'Pet not found' });
+    }
+    
+    res.json({ message: 'Pet deleted successfully', deletedPet });
+  } catch (err) {
+    console.error('Error deleting pet:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 module.exports = router;
