@@ -114,4 +114,20 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+// DELETE - Remove a reminder
+router.delete('/:id', async (req, res) => {
+  try {
+    const deletedReminder = await Reminder.findByIdAndDelete(req.params.id);
+    
+    if (!deletedReminder) {
+      return res.status(404).json({ message: 'Reminder not found' });
+    }
+    
+    res.json({ message: 'Reminder deleted successfully', deletedReminder });
+  } catch (err) {
+    console.error('Error deleting reminder:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 module.exports = router;
