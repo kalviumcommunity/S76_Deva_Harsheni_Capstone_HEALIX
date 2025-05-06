@@ -6,6 +6,16 @@ meta {
 
 put {
   url: http://localhost:5000/api/pets/6811d2672bd80353c369c2f7
-  body: none
+  body: json
   auth: inherit
+}
+
+body:json {
+  {
+    "name": "Bruno pattu",
+    "breed": "Golden Retriever",
+    "age": 4,
+    "userId": "662f60c2e4b0baf8b7a9e123",
+    "medicalHistory": "Vaccinated for rabies and parvovirus. Minor ear infection in 2023."
+  }
 }
