@@ -14,6 +14,7 @@ connectDatabase();
 
 
 // Routes
+app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/pets', require('./routes/petRoutes'));
 app.use('/api/reminders', require('./routes/reminderRoutes'));
 app.use('/api/documents', require('./routes/documentRoutes'));
